@@ -20,9 +20,11 @@ export async function POST(req: NextRequest) {
         console.log("📞 Telefone Formatado:", formattedPhone);
 
         const browser = await puppeteer.launch({
-            headless: false,
-            args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-blink-features=AutomationControlled"]
-        });
+            headless: "new", // Usar o modo headless nativo
+            executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
+            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+          });
+          
         const page = await browser.newPage();
         await page.goto(`https://patient.docway.com.br/appointment/SulamericaVida/create?cartao=${cpf}`, { waitUntil: "networkidle2" });
 

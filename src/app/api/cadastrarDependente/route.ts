@@ -33,9 +33,11 @@ export async function POST(req: Request) {
         console.log("📅 Data Formatada:", dataFormatada);
 
         const browser = await puppeteer.launch({
-            headless: false,
-            args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-blink-features=AutomationControlled"]
+            headless: "new", // Usar o modo headless nativo
+            executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
+            args: ["--no-sandbox", "--disable-setuid-sandbox"],
         });
+          
 
         const page = await browser.newPage();
         await page.goto("https://sulamericavida.docway.com.br/", { waitUntil: "networkidle2" });
