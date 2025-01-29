@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
 
         // URL final com sessão válida
         const finalURL = page.url();
-
+        console.log(finalURL)
         await browser.close();
 
         return NextResponse.json({ success: true, url: finalURL });
