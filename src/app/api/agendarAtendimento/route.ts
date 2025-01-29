@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         console.log("📞 Telefone Formatado:", formattedPhone);
 
         const browser = await puppeteer.launch({
-            headless: "new", // Usar o modo headless nativo
+            headless: true, // Usar o modo headless nativo
             executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
           });

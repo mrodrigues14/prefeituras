@@ -103,7 +103,7 @@ export async function POST(req: Request) {
 async function registrarDependenteNoSite(cpf: string, dataNascimento: string, nomeDependente: string, cpfDependente: string, nascimentoDependente: string) {
   try {
     const browser = await puppeteer.launch({
-      headless: "new", // Usar o modo headless nativo
+      headless: true, // Usar o modo headless nativo
       executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
