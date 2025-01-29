@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
-import { PrismaClient } from "@prisma/client";
+import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
+import { PrismaClient } from "@prisma/client";
+
 
 const prisma = new PrismaClient();
 
@@ -88,10 +89,10 @@ export async function POST(req: Request) {
       formatDate(cliente.data_nascimento.toISOString().split("T")[0])
     );
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Cadastro e inclusão de dependente realizados com sucesso!", 
-      puppeteerResponse 
+    return NextResponse.json({
+      success: true,
+      message: "Cadastro e inclusão de dependente realizados com sucesso!",
+      puppeteerResponse
     });
 
   } catch (error) {
@@ -103,18 +104,18 @@ export async function POST(req: Request) {
 // 🔹 Função para registrar dependente no site usando Puppeteer
 async function registrarDependenteNoSite(cpf: string, dataNascimento: string, nomeDependente: string, cpfDependente: string, nascimentoDependente: string) {
   try {
-    const browser = await puppeteer.launch({
-      headless: true, // Força o tipo correto
-      executablePath: await chromium.executablePath(), // Obtém o caminho correto para o Chromium
-      args: chromium.args, // Usa os argumentos recomendados para Vercel
-      defaultViewport: chromium.defaultViewport, // Mantém a configuração padrão
-    });
     
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: await chromium.executablePath(),
+      args: chromium.args, // Argumentos otimizados para o Vercel
+  });
+
 
     function formatCPF(cpf: string) {
-        const cleaned = cpf.replace(/\D/g, ""); // Remove tudo que não for número
-        return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-      }
+      const cleaned = cpf.replace(/\D/g, ""); // Remove tudo que não for número
+      return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
     console.log("✅ Browser aberto!");
     const page = await browser.newPage();
     await page.goto("https://sulamericavida.docway.com.br/", { waitUntil: "networkidle2" });

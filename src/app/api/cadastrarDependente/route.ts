@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
+
 
 // Função para converter data de "aaaa-mm-dd" para "dd/mm/aaaa"
 function formatDate(dateString: string) {
@@ -33,12 +34,12 @@ export async function POST(req: Request) {
         console.log("🆔 CPF Formatado:", cpfFormatado);
         console.log("📅 Data Formatada:", dataFormatada);
 
+        
         const browser = await puppeteer.launch({
-            headless: true, // Força o tipo correto
-            executablePath: await chromium.executablePath(), // Obtém o caminho correto para o Chromium
-            args: chromium.args, // Usa os argumentos recomendados para Vercel
-            defaultViewport: chromium.defaultViewport, // Mantém a configuração padrão
-          });
+            headless: true,
+            executablePath: await chromium.executablePath(),
+            args: chromium.args, // Argumentos otimizados para o Vercel
+        });
           
 
         const page = await browser.newPage();

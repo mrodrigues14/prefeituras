@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
 // Função para formatar telefone
@@ -21,12 +21,10 @@ export async function POST(req: NextRequest) {
         console.log("📞 Telefone Formatado:", formattedPhone);
 
         const browser = await puppeteer.launch({
-            headless: true, // Força o tipo correto
-            executablePath: await chromium.executablePath(), // Obtém o caminho correto para o Chromium
-            args: chromium.args, // Usa os argumentos recomendados para Vercel
-            defaultViewport: chromium.defaultViewport, // Mantém a configuração padrão
-          });
-          
+            headless: true,
+            executablePath: await chromium.executablePath(),
+            args: chromium.args, // Argumentos otimizados para o Vercel
+        });
         const page = await browser.newPage();
         await page.goto(`https://patient.docway.com.br/appointment/SulamericaVida/create?cartao=${cpf}`, { waitUntil: "networkidle2" });
 
