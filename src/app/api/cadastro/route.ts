@@ -103,9 +103,11 @@ export async function POST(req: Request) {
 async function registrarDependenteNoSite(cpf: string, dataNascimento: string, nomeDependente: string, cpfDependente: string, nascimentoDependente: string) {
   try {
     const browser = await puppeteer.launch({
-      headless: false,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-blink-features=AutomationControlled"]
+      headless: "new", // Usar o modo headless nativo
+      executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
+    
 
     function formatCPF(cpf: string) {
         const cleaned = cpf.replace(/\D/g, ""); // Remove tudo que não for número

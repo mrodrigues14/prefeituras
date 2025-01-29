@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel-build": "prisma generate && next build",
-    "postinstall": "prisma generate"
+    "vercel-build": "prisma generate && npx puppeteer browsers install chrome && next build",
+    "postinstall": "prisma generate && npx puppeteer browsers install chrome"
   },
   "dependencies": {
     "@playwright/test": "^1.50.0",
