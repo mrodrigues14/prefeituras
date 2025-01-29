@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "vercel-build": "prisma generate && next build",
     "postinstall": "prisma generate"
-
   },
   "dependencies": {
     "@playwright/test": "^1.50.0",
