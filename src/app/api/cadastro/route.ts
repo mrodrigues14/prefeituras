@@ -111,11 +111,8 @@ async function registrarDependenteNoSite(cpf: string, dataNascimento: string, no
       args: chromium.args, // Argumentos otimizados para o Vercel
   });
 
-
-
-    console.log("✅ Browser aberto!");
-    const page = await browser.newPage();
-    await page.goto("https://sulamericavida.docway.com.br/", { waitUntil: "networkidle2" });
+  const page = await browser.newPage();
+    await page.goto("https://sulamericavida.docway.com.br/", { waitUntil: "domcontentloaded" });
 
     // Preenchendo CPF e Data de Nascimento
     await page.waitForSelector("#cpfInput", { visible: true });
