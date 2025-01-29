@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import { PrismaClient } from "@prisma/client";
+import chromium from "@sparticuz/chromium";
 
 const prisma = new PrismaClient();
 
@@ -103,9 +104,10 @@ export async function POST(req: Request) {
 async function registrarDependenteNoSite(cpf: string, dataNascimento: string, nomeDependente: string, cpfDependente: string, nascimentoDependente: string) {
   try {
     const browser = await puppeteer.launch({
-      headless: true, // Usar o modo headless nativo
-      executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: true, // Força o tipo correto
+      executablePath: await chromium.executablePath(), // Obtém o caminho correto para o Chromium
+      args: chromium.args, // Usa os argumentos recomendados para Vercel
+      defaultViewport: chromium.defaultViewport, // Mantém a configuração padrão
     });
     
 

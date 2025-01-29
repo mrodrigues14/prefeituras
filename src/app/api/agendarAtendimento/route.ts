@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
 
 // Função para formatar telefone
 function formatPhoneNumber(phone: string): string {
@@ -20,9 +21,10 @@ export async function POST(req: NextRequest) {
         console.log("📞 Telefone Formatado:", formattedPhone);
 
         const browser = await puppeteer.launch({
-            headless: true, // Usar o modo headless nativo
-            executablePath: "/usr/bin/chromium-browser", // Usar Chromium do sistema
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+            headless: true, // Força o tipo correto
+            executablePath: await chromium.executablePath(), // Obtém o caminho correto para o Chromium
+            args: chromium.args, // Usa os argumentos recomendados para Vercel
+            defaultViewport: chromium.defaultViewport, // Mantém a configuração padrão
           });
           
         const page = await browser.newPage();
