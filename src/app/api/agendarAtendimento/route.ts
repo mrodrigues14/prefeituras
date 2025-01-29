@@ -1,14 +1,17 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 
 // Função para formatar telefone
-function formatPhoneNumber(phone) {
+function formatPhoneNumber(phone: string): string {
+    if (!phone) return "";
     const cleaned = phone.replace(/\D/g, "");
-    const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
-    return match ? `(${match[1]}) ${match[2]}-${match[3]}` : phone;
+    if (cleaned.length === 11) {
+        return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+    }
+    return phone;
 }
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
     try {
         const { cpf, nomePacienteDigitado, email, telefone, sintomas } = await req.json();
         console.log("ℹ️ Dados Recebidos:", cpf, nomePacienteDigitado, email, telefone, sintomas);
@@ -24,74 +27,76 @@ export async function POST(req) {
         await page.goto(`https://patient.docway.com.br/appointment/SulamericaVida/create?cartao=${cpf}`, { waitUntil: "networkidle2" });
 
         // Captura os cookies e aplica de novo para garantir persistência
-        const cookies = await page.cookies();
-        await page.setCookie(...cookies);
+        // const cookies = await page.cookies();
+        // await page.setCookie(...cookies);
 
-        // Clica no botão "Next"
-        const buttonSelector = ".button-next";
-        await page.waitForSelector(buttonSelector, { visible: true });
-        await page.click(buttonSelector);
-        await page.waitForNavigation({ waitUntil: "networkidle2" });
+        // // Clica no botão "Next"
+        // const buttonSelector = ".button-next";
+        // await page.waitForSelector(buttonSelector, { visible: true });
+        // await page.click(buttonSelector);
+        // await page.waitForNavigation({ waitUntil: "networkidle2" });
 
-        // Seleciona paciente
-        const nomesSelector = "label.checkbox-container";
-        await page.waitForSelector(nomesSelector, { visible: true });
+        // // Seleciona paciente
+        // const nomesSelector = "label.checkbox-container";
+        // await page.waitForSelector(nomesSelector, { visible: true });
 
-        const nomes = await page.$$eval(nomesSelector, labels =>
-            labels.map(label => ({
-                nome: label.textContent?.trim().replace(/\s*\(.*?\)\s*/g, ""),
-                value: label.querySelector('input[type="radio"]')?.getAttribute("value") || "",
-                inputSelector: `input[type="radio"][value="${label.querySelector('input[type="radio"]')?.getAttribute("value")}"]`
-            }))
-        );
+        // const nomes = await page.$$eval(nomesSelector, labels =>
+        //     labels.map(label => ({
+        //         nome: label.textContent?.trim().replace(/\s*\(.*?\)\s*/g, ""),
+        //         value: label.querySelector('input[type="radio"]')?.getAttribute("value") || "",
+        //         inputSelector: `input[type="radio"][value="${label.querySelector('input[type="radio"]')?.getAttribute("value")}"]`
+        //     }))
+        // );
 
-        const nomeCorrespondente = nomes.find(item => item.nome.trim().toLowerCase() === nomePacienteDigitado.trim().toLowerCase());
+        // const nomeCorrespondente = nomes.find(item =>
+        //     item.nome?.trim().toLowerCase() === nomePacienteDigitado.trim().toLowerCase()
+        // );
 
-        if (!nomeCorrespondente) {
-            throw new Error("❌ Nome não encontrado.");
-        }
+        // if (!nomeCorrespondente) {
+        //     throw new Error("❌ Nome não encontrado.");
+        // }
 
-        await page.evaluate(selector => document.querySelector(selector)?.click(), nomeCorrespondente.inputSelector);
-        await page.waitForSelector(buttonSelector, { visible: true });
-        await page.click(buttonSelector);
-        await page.waitForNavigation({ waitUntil: "networkidle2" });
+        // await page.evaluate(selector => document.querySelector(selector)?.click(), nomeCorrespondente.inputSelector);
+        // await page.waitForSelector(buttonSelector, { visible: true });
+        // await page.click(buttonSelector);
+        // await page.waitForNavigation({ waitUntil: "networkidle2" });
 
-        // Preenche o formulário
-        const emailSelector = "#input-email";
-        const phoneSelector = "#input-phone";
-        const submitButtonSelector = "#btnRequest";
+        // // Preenche o formulário
+        // const emailSelector = "#input-email";
+        // const phoneSelector = "#input-phone";
+        // const submitButtonSelector = "#btnRequest";
 
-        await page.waitForSelector(emailSelector, { visible: true });
-        await page.type(emailSelector, email);
+        // await page.waitForSelector(emailSelector, { visible: true });
+        // await page.type(emailSelector, email);
 
-        await page.waitForSelector(phoneSelector, { visible: true });
-        await page.type(phoneSelector, formattedPhone);
+        // await page.waitForSelector(phoneSelector, { visible: true });
+        // await page.type(phoneSelector, formattedPhone);
 
-        await page.evaluate(selector => {
-            const button = document.querySelector(selector);
-            if (button && button.disabled) button.removeAttribute("disabled");
-        }, submitButtonSelector);
+        // await page.evaluate(selector => {
+        //     const button = document.querySelector(selector);
+        //     if (button && button.disabled) button.removeAttribute("disabled");
+        // }, submitButtonSelector);
 
-        await page.click(submitButtonSelector);
-        console.log("✅ Informações enviadas!");
-        await page.waitForNavigation({ waitUntil: "networkidle2" });
+        // await page.click(submitButtonSelector);
+        // console.log("✅ Informações enviadas!");
+        // await page.waitForNavigation({ waitUntil: "networkidle2" });
 
-        // Preenche os sintomas
-        const sintomasSelector = "#input-reason";
-        await page.waitForSelector(sintomasSelector, { visible: true });
-        await page.type(sintomasSelector, sintomas, { delay: 100 });
+        // // Preenche os sintomas
+        // const sintomasSelector = "#input-reason";
+        // await page.waitForSelector(sintomasSelector, { visible: true });
+        // await page.type(sintomasSelector, sintomas, { delay: 100 });
 
-        const sintomasSubmitButtonSelector = "#btnRequest";
-        await page.waitForSelector(sintomasSubmitButtonSelector, { visible: true });
-        await page.evaluate(selector => {
-            const button = document.querySelector(selector);
-            if (button && button.disabled) button.removeAttribute("disabled");
-        }, sintomasSubmitButtonSelector);
+        // const sintomasSubmitButtonSelector = "#btnRequest";
+        // await page.waitForSelector(sintomasSubmitButtonSelector, { visible: true });
+        // await page.evaluate(selector => {
+        //     const button = document.querySelector(selector);
+        //     if (button && button.disabled) button.removeAttribute("disabled");
+        // }, sintomasSubmitButtonSelector);
 
-        await page.click(sintomasSubmitButtonSelector);
-        console.log("✅ Sintomas enviados!");
+        // await page.click(sintomasSubmitButtonSelector);
+        // console.log("✅ Sintomas enviados!");
 
-        await page.waitForNavigation({ waitUntil: "networkidle2" });
+        //await page.waitForNavigation({ waitUntil: "networkidle2" });
 
 
         // URL final com sessão válida
@@ -99,9 +104,11 @@ export async function POST(req) {
 
         await browser.close();
 
-        return NextResponse.json({ success: true, url: finalURL});
+        return NextResponse.json({ success: true, url: finalURL });
     } catch (error) {
-        console.error("🚨 Erro:", error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        const err = error as Error;
+        console.error("🚨 Erro:", err.message);
+        return NextResponse.json({ success: false, error: err.message }, { status: 500 });
     }
+    
 }
