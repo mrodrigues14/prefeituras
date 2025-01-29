@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = "mysql://u624627699_fores:Forest1011.@82.180.153.103:3306/u624627699_forest"
+  shadowDatabaseUrl = "mysql://root:1234@localhost:3306/shadow_db"
+}
+
+model tb_clientes {
+  idCliente           Int           @id @default(autoincrement())
+  nome                String        @db.VarChar(255)
+  telefone            String?       @db.VarChar(20)
+  email               String?       @db.VarChar(255)
+  cpf                 String        @unique(map: "cpf") @db.VarChar(14)
+  data_nascimento     DateTime      @db.Date
+  idClienteDependente Int?
+  data_vinculo        String?       @db.VarChar(100)
+  tb_clientes         tb_clientes?  @relation("tb_clientesTotb_clientes", fields: [idClienteDependente], references: [idCliente], onUpdate: Restrict, map: "tb_clientes_ibfk_1")
+  other_tb_clientes   tb_clientes[] @relation("tb_clientesTotb_clientes")
+
+  @@index([idClienteDependente], map: "idClienteDependente")
+}
