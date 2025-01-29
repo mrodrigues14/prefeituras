@@ -8,10 +8,9 @@ const prisma = new PrismaClient();
 
 // Função para formatar CPF "000.000.000-00"
 function formatCPF(cpf: string) {
-  const cleaned = cpf.replace(/\D/g, "");
+  const cleaned = cpf.replace(/\D/g, ""); // Remove tudo que não for número
   return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
-
 // Função para converter data "aaaa-mm-dd" para "dd/mm/aaaa"
 function formatDate(dateString: string) {
   if (!dateString) return "";
@@ -33,6 +32,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "Nome, CPF e Data de Nascimento são obrigatórios." }, { status: 400 });
     }
 
+    
     // Formatar CPF
     const formattedCPF = formatCPF(cpf);
 
@@ -112,10 +112,7 @@ async function registrarDependenteNoSite(cpf: string, dataNascimento: string, no
   });
 
 
-    function formatCPF(cpf: string) {
-      const cleaned = cpf.replace(/\D/g, ""); // Remove tudo que não for número
-      return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-    }
+
     console.log("✅ Browser aberto!");
     const page = await browser.newPage();
     await page.goto("https://sulamericavida.docway.com.br/", { waitUntil: "networkidle2" });
