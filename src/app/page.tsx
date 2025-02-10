@@ -7,12 +7,13 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/login"); 
+    router.push("/login"); // Redireciona automaticamente para /login
   }, [router]);
 
   return (
-    <div className="d-flex vh-100 w-100 justify-content-center align-items-center"
-      style={{ backgroundColor: "rgb(18, 7, 139)" }}>
-    </div>
+    <div
+      className="d-flex vh-100 w-100 justify-content-center align-items-center"
+      style={{ backgroundColor: "rgb(18, 7, 139)" }}
+    ></div>
   );
 }
