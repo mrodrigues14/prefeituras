@@ -4,6 +4,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { AtendimentoProvider } from "./context/AtendimentoContext";
 import Sidebar from "@/components/SideBar";
 import { usePathname } from "next/navigation";
+import ".//styles/globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname(); // Pega a URL atual
