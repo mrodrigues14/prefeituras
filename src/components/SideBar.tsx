@@ -38,11 +38,11 @@ export default function Sidebar() {
           <img src="/tessaro.jpg" alt="Drogaria Tessaro" width="200" height="200" />
         </div>
 
-        <nav className="mt-4 w-100">
+        <nav className="mt-4 w-100 flex-grow-1">
           <ul className="nav flex-column w-100">
             <li className="nav-item mb-3">
               <button
-                className={`nav-link text-white w-100 p-2 ${pathname === "/atendimentos" ? "bg-secondary rounded" : ""}`}
+                className={`nav-link w-100 p-2 ${pathname === "/atendimentos" ? "bg-secondary text-white rounded" : "text-light"}`}
                 onClick={() => {
                   router.push("/atendimentos");
                   setIsOpen(false); // Fecha a sidebar após clicar no botão
@@ -54,14 +54,27 @@ export default function Sidebar() {
 
             <li className="nav-item mb-3">
               <button
-                className="nav-link text-white w-100 p-2"
-                onClick={() => alert("Ajuda ainda não implementada!")}
+                className={`nav-link w-100 p-2 ${pathname === "/ajuda" ? "bg-secondary text-white rounded" : "text-light"}`}
+                onClick={() => {
+                  router.push("/ajuda");
+                  setIsOpen(false); // Fecha a sidebar após clicar no botão
+                }}
               >
                 <i className="bi bi-question-circle me-2"></i> Ajuda
               </button>
             </li>
           </ul>
         </nav>
+
+        {/* Botão de Sair fixado na parte inferior */}
+        <button
+          className="btn btn-danger w-100 mt-auto p-2"
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
+          <i className="bi bi-box-arrow-right me-2"></i> Sair
+        </button>
       </aside>
 
       {/* Fundo escuro ao abrir a sidebar em telas pequenas */}
