@@ -24,7 +24,7 @@ export default function Atendimento() {
 
             if (response.ok) {
                 document.cookie = result.cookies;
-                window.location.href = result.url;
+                window.location.href = `https://patient.docway.com.br/appointment/SulamericaVida/create?cartao=${cpf}`;
             } else {
                 alert(result.error || "Erro ao registrar o atendimento.");
             }

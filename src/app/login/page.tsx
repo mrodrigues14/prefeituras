@@ -61,7 +61,7 @@ export default function Login() {
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center vh-100 w-100"
-      style={{ backgroundColor: "#1E1E2E", minHeight: "100vh", padding: "20px" }}>
+      style={{ backgroundColor: "#a2adaf", minHeight: "100vh", padding: "20px" }}>
       
       <div className="card shadow-lg p-5 text-center w-100"
         style={{

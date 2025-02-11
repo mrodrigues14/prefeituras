@@ -6,11 +6,11 @@ export default function Home() {
 
   return (
     <div className="d-flex flex-column vh-100 w-100 justify-content-center align-items-center"
-      style={{ backgroundColor: "#1E1E2E", minHeight: "100vh" }}>
+      style={{ backgroundColor: "#a2adaf", minHeight: "100vh" }}>
 
       {/* Logo acima do card */}
       <div className="text-center mb-4">
-        <img src="/logo1.png" alt="Saúde e Cor" width="250" height="250" style={{ filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2))" }} />
+        <img src="/image.png" alt="Saúde e Cor" width="250" height="250" style={{ filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2))" }} />
       </div>
 
       {/* Card de login e cadastro */}
