@@ -3,6 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { AtendimentoProvider } from "./context/AtendimentoContext";
 import "./styles/globals.css";
 import SidebarWrapper from "@/components/SidebarWrapper";
+import Sidebar from "@/components/SideBar";
 
 export const metadata = {
   title: "Teleatendimento - Prefeitura Teste",
@@ -17,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-br">
       <AtendimentoProvider>
         <body className="d-flex">
-          <SidebarWrapper /> {/* ✅ Movemos a lógica do pathname para esse componente */}
+          <Sidebar /> {/* ✅ Movemos a lógica do pathname para esse componente */}
           <main className="flex-grow-1 d-flex flex-column align-items-center justify-content-center bg-light">
             {children}
           </main>
