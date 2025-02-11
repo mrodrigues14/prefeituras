@@ -1,8 +1,10 @@
-"use client"; // Necessário para usar hooks como usePathname e useRouter
+"use client";
 
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false); // Estado para controlar a sidebar
   const pathname = usePathname();
   const router = useRouter();
 

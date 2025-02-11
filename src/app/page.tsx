@@ -1,8 +1,14 @@
 "use client";
+
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+
+  useEffect(() => {
+    router.push("/login"); // Redireciona automaticamente para /login
+  }, [router]);
 
   return (
     <div className="d-flex flex-column vh-100 w-100 justify-content-center align-items-center"

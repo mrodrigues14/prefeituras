@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: "Nome, CPF e Data de Nascimento são obrigatórios." }, { status: 400 });
     }
 
-    
+
     // Formatar CPF
     const formattedCPF = formatCPF(cpf);
 
@@ -104,14 +104,16 @@ export async function POST(req: Request) {
 // 🔹 Função para registrar dependente no site usando Puppeteer
 async function registrarDependenteNoSite(cpf: string, dataNascimento: string, nomeDependente: string, cpfDependente: string, nascimentoDependente: string) {
   try {
-    
-    const browser = await puppeteer.launch({
-      headless: true,
-      executablePath: await chromium.executablePath(),
-      args: chromium.args, // Argumentos otimizados para o Vercel
-  });
 
-  const page = await browser.newPage();
+    const browser = await puppeteer.launch({
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: '/usr/bin/chromium-browser',
+      headless: true,
+    });
+    
+
+    const page = await browser.newPage();
     await page.goto("https://sulamericavida.docway.com.br/", { waitUntil: "domcontentloaded" });
 
     // Preenchendo CPF e Data de Nascimento

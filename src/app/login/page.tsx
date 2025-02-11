@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAtendimento } from "../context/AtendimentoContext";
 
-export default function Login() {
+export default function Home() {
   const router = useRouter();
   const { setDados } = useAtendimento();
   const [cpf, setCpf] = useState("");
@@ -73,33 +73,67 @@ export default function Login() {
         <h3 className="fw-bold mb-4">Login</h3>
         
         {error && <div className="alert alert-danger">{error}</div>}
-        
-        <form onSubmit={handleSubmit} className="w-100 text-start">
-          <div className="mb-3">
-            <label className="form-label">CPF:</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Digite seu CPF"
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
-              maxLength={14}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Data de Nascimento:</label>
-            <input
-              type="date"
-              className="form-control"
-              value={dataNascimento}
-              onChange={(e) => setDataNascimento(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-success w-100 py-2 fw-bold" disabled={loading}>
-            {loading ? "Verificando..." : "Entrar"}
-          </button>
-        </form>
+
+        {/* Container com sombra para os inputs */}
+        <div className="p-4 shadow-lg rounded bg-white mx-auto" style={{ maxWidth: "500px" }}>
+          <form className="w-100" onSubmit={handleSubmit}>
+            {/* Campo CPF com ícone */}
+            <div className="mb-3">
+              <label className="form-label">CPF</label>
+              <div className="input-group">
+                <span className="input-group-text bg-white border-end-0">
+                  <i className="bi bi-person text-muted"></i> {/* Ícone Bootstrap */}
+                </span>
+                <input
+                  type="text"
+                  className="form-control border-start-0"
+                  placeholder="Digite seu CPF"
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                  maxLength={14}
+                />
+              </div>
+            </div>
+
+            {/* Campo Data de Nascimento com ícone */}
+            <div className="mb-3">
+              <label className="form-label">Data de Nascimento</label>
+              <div className="input-group">
+                <span className="input-group-text bg-white border-end-0">
+                  <i className="bi bi-calendar text-muted"></i> {/* Ícone Bootstrap */}
+                </span>
+                <input
+                  type="date"
+                  className="form-control border-start-0"
+                  value={dataNascimento}
+                  onChange={(e) => setDataNascimento(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="btn btn-primary w-100 py-2 fw-bold" disabled={loading}>
+              {loading ? "Verificando..." : "Entrar"}
+            </button>
+          </form>
+        </div>
       </div>
+
+      {/* Lado direito - Ilustração (some em telas pequenas) */}
+      <div
+        className="col-12 h-100 col-md-6 d-flex align-items-center justify-content-center d-none d-md-flex"
+        style={{ background: "rgb(18, 7, 139)", padding: "20px", height: "100vh", width: "60%" }}
+      >
+        <div className="text-center">
+          <img
+            src="/tessaro.jpg"
+            alt="Drogaria Tessaro"
+            width="250"
+            height="250"
+            style={{ filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2))" }}
+          />
+        </div>
+      </div>
+
     </div>
   );
 }
