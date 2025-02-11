@@ -12,8 +12,6 @@ export default function Sidebar() {
   // Verifica se está na página de login
   const isLoginPage = pathname === "/login";
 
-  if (isLoginPage) return null; // Oculta a sidebar na página de login
-
   // Fecha o menu ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -24,14 +22,15 @@ export default function Sidebar() {
 
     if (menuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+
+  // Evita renderizar a sidebar na página de login
+  if (isLoginPage) return null;
 
   return (
     <>

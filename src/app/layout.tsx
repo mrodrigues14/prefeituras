@@ -2,7 +2,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { AtendimentoProvider } from "./context/AtendimentoContext";
 import "./styles/globals.css";
-import SidebarWrapper from "@/components/SidebarWrapper";
 import Sidebar from "@/components/SideBar";
 
 export const metadata = {
