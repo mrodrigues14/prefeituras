@@ -5,35 +5,14 @@ import { useAtendimento } from "../context/AtendimentoContext";
 
 export default function Atendimento() {
     const { nome, cpf, telefone, email, nascimento, setDados } = useAtendimento();
-    const router = useRouter(); // Hook para redirecionamento interno
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setDados({ [name]: value });
     };
 
-    const handleSubmit = async () => {
-        try {
-            const response = await fetch("/api/agendarAtendimento", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ cpf, nomePacienteDigitado: nome, email, telefone }),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                document.cookie = result.cookies;
-                window.location.href = `https://patient.docway.com.br/appointment/SulamericaVida/create?cartao=${cpf}`;
-            } else {
-                alert(result.error || "Erro ao registrar o atendimento.");
-            }
-        } catch (error) {
-            console.error("Erro ao enviar dados:", error);
-            alert("Erro ao registrar o atendimento.");
-        }
+    const handleSubmit = () => {
+        window.location.href = `https://patient.docway.com.br/appointment/SulamericaVida/create?cartao=${cpf}`;
     };
 
     return (

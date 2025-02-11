@@ -5,10 +5,10 @@ import "./styles/globals.css";
 import SidebarWrapper from "@/components/SidebarWrapper";
 
 export const metadata = {
-  title: "Drogaria Tessaro",
-  description: "Drogaria Tessaro",
+  title: "Teleatendimento - Prefeitura Teste",
+  description: "Teleatendimento - Prefeitura Teste",
   icons: {
-    icon: "/icon.ico",
+    icon: "/image.png",
   },
 };
 
