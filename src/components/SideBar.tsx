@@ -10,7 +10,7 @@ export default function Sidebar() {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
   // Verifica se está na página de login
-  const isLoginPage = pathname === "/login";
+  const isHiddenPage = pathname === "/" || pathname === "/login" || pathname === "/cadastro";
 
   // Fecha o menu ao clicar fora
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Sidebar() {
   }, [menuOpen]);
 
   // Evita renderizar a sidebar na página de login
-  if (isLoginPage) return null;
+  if (isHiddenPage) return null;
 
   return (
     <>
