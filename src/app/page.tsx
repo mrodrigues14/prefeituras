@@ -5,20 +5,19 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="d-flex flex-column vh-100 w-100 justify-content-center align-items-center"
+    <div className="d-flex flex-column vh-100 w-100 justify-content-center align-items-center p-3"
       style={{ backgroundColor: "#a2adaf", minHeight: "100vh" }}>
 
       {/* Logo acima do card */}
       <div className="text-center mb-4">
-        <img src="/image.png" alt="Saúde e Cor" width="250" height="250" style={{ filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2))" }} />
+        <img src="/image.png" alt="Saúde e Cor" className="img-fluid" style={{ maxWidth: "250px", filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2))" }} />
       </div>
 
       {/* Card de login e cadastro */}
-      <div className="card shadow-lg p-4 text-center" style={{
+      <div className="card shadow-lg p-4 text-center w-100" style={{
         maxWidth: "600px",
         borderRadius: "12px",
-        backgroundColor: "#FFF",
-        padding: "20px",
+        backgroundColor: "#FFF"
       }}>
         <p className="fs-5 fw-semibold text-dark">Seja bem-vindo ao atendimento de telemedicina do município Saúde e Cor!</p>
 
